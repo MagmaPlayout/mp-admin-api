@@ -40,7 +40,7 @@ userController.authenticate= function(req, res) {
 
 
 			var token = jwt.sign(sessionData, config.secret, {
-				expiresIn: 86400 // 86400(seconds) expires in 24 hours 
+				expiresIn: config.tokenExpires 
 			});
 
 			res.json({
