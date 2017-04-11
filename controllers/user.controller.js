@@ -4,7 +4,9 @@ var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var userController = {};
 
-//GET - Return a user with specified ID
+/**
+ * GET - Return a user with specified ID
+ */
 userController.findById = function(req, res) {  
     userDao.findById(req.params.id, function(err, usr) {
     
@@ -16,7 +18,10 @@ userController.findById = function(req, res) {
     });
 };
 
-//POST - Authentication
+
+/**
+ * POST - Authentication
+ */
 userController.authenticate= function(req, res) {  
     userDao.findUser(req.body.username, req.body.password, function(err, user) {
         if (err) throw err;
@@ -27,8 +32,15 @@ userController.authenticate= function(req, res) {
 
 			// if user is found and password is right
 			// create a token
-			var token = jwt.sign(user, config.secret, {
-				expiresIn: 86400 // expires in 24 hours
+
+            var sessionData = {
+                id : user.id,
+                name: user.name + ' ' + user.surname               
+            } 
+
+
+			var token = jwt.sign(sessionData, config.secret, {
+				expiresIn: 86400 // 86400(seconds) expires in 24 hours 
 			});
 
 			res.json({

@@ -7,7 +7,7 @@ var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var userController = require('./controllers/user.controller');
 var config = require('./config'); // get our config file
-
+var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 
 
