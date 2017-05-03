@@ -59,8 +59,8 @@ apiRoutes.post('/authenticate', userController.authenticate);
 apiRoutes.use(function(req, res, next) {
 
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.param('token') || req.headers['x-access-token'];
-
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	
 	// decode token
 	if (token) {
 
@@ -71,9 +71,7 @@ apiRoutes.use(function(req, res, next) {
 			} else {
 				// if everything is good, save to request for use in other routes
 
-				req.decoded = decoded;
-				console.log("decoded: ");	
-				console.log(decoded);
+				req.decoded = decoded;				
 				next();
 			}
 		});
@@ -112,4 +110,10 @@ app.use('/api', apiRoutes);
 
 app.listen(port);
 
-console.log('The API is at http://localhost:' + port + "/api");
+console.log("========================================================");
+console.log("************** Magma-Playout | admin-api ***************");
+console.log("========================================================");
+console.log("________________________________________________________");
+
+console.log("Server listening on port %d in %s mode", port, app.settings.env);
+console.log("________________________________________________________");

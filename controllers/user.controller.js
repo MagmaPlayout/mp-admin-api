@@ -16,6 +16,7 @@ userController.findById = function(req, res) {
         
         res.status(200).jsonp(usr);
     });
+	
 };
 
 
@@ -24,6 +25,7 @@ userController.findById = function(req, res) {
  */
 userController.authenticate= function(req, res) {  
     userDao.findUser(req.body.username, req.body.password, function(err, user) {
+		
         if (err) throw err;
 
 		if (!user) {
@@ -52,7 +54,6 @@ userController.authenticate= function(req, res) {
 		}
        
     });
-
 };
 
 module.exports = userController;
