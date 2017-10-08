@@ -18,6 +18,27 @@ playoutLogController.listAll = function(req, res) {
 };
 
 /**
+ * GET - Return logs filtered
+ */
+playoutLogController.getByFilter= function(req, res) { 
+    
+    var filters = {
+		media : req.body.media,
+        starttime: req.body.starttime,   
+        endtime: req.body.endtime,       
+	};
+
+    playoutLogDao.getByFilter(filters, function(err, result) {
+        if(err) {
+            console.log(err);
+            return res.send(500, err.message);
+        }    
+        res.status(200).jsonp(result);
+    });
+};
+
+
+/**
  * POST - Create a new log
  * @returns {PlayoutLog} last inserted
  */
