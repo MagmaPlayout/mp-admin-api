@@ -6,9 +6,11 @@ var app         = express();
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var userController = require('./controllers/user.controller');
+var playoutLogController = require('./controllers/playoutLog.controller');
 var config = require('./config'); // get our config file
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
-
+var routes = require('./routes');
+var routesAuth = require('./routesAuth');
 
 
 // =================================================================
@@ -41,6 +43,23 @@ app.get('/', function(req, res) {
 	
 	
 });
+//----------------Controllers------------------------------------------
+var controllers = {
+  user : userController,
+  playoutLog : playoutLogController, 
+  others : {
+	  check : function(req, res) {
+		res.json(req.decoded);
+	  },
+	  welcome: function(req, res) {
+			res.json({ message: 'Welcome to Admin API!' });
+	  }
+  }
+   /** 
+   * ...
+   * Aca van todos los controlers 
+   * */
+};
 
 // ---------------------------------------------------------
 // get an instance of the router for api routes
@@ -51,7 +70,8 @@ var apiRoutes = express.Router();
 // authentication (no middleware necessary since this isnt authenticated)
 // ---------------------------------------------------------
 // http://localhost:8080/api/authenticate
-apiRoutes.post('/authenticate', userController.authenticate);
+//apiRoutes.post('/authenticate', userController.authenticate);
+routes.setup(apiRoutes,controllers);
 
 // ---------------------------------------------------------
 // route middleware to authenticate and check token
@@ -83,8 +103,7 @@ apiRoutes.use(function(req, res, next) {
 		return res.status(403).send({ 
 			success: false, 
 			message: 'No token provided.'
-		});
-		
+		});		
 	}
 	
 });
@@ -92,17 +111,8 @@ apiRoutes.use(function(req, res, next) {
 // ---------------------------------------------------------
 // authenticated routes
 // ---------------------------------------------------------
-apiRoutes.get('/', function(req, res) {
-	res.json({ message: 'Welcome to Admin API!' });
-});
-
-
-apiRoutes.get('/check', function(req, res) {
-	res.json(req.decoded);
-});
-
+routesAuth.setup(apiRoutes,controllers);
 app.use('/api', apiRoutes);
-
 
 // =================================================================
 // start the server ================================================
