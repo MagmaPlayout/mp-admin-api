@@ -6,6 +6,7 @@ var app         = express();
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var userController = require('./controllers/user.controller');
+var playoutLogController = require('./controllers/playoutLog.controller');
 var config = require('./config'); // get our config file
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
@@ -101,8 +102,14 @@ apiRoutes.get('/check', function(req, res) {
 	res.json(req.decoded);
 });
 
-app.use('/api', apiRoutes);
 
+/**
+TODO: COMENTO EL USO DE LA SEGURIDAD PARA PODER LEVANTAR LA API DE HISTORICO.
+VER CON TUMBA
+**/
+//app.use('/api', apiRoutes);
+
+app.get('/api/playoutLog', playoutLogController.listAll);
 
 // =================================================================
 // start the server ================================================
