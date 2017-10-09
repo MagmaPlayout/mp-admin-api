@@ -21,14 +21,9 @@ playoutLogController.listAll = function(req, res) {
  * GET - Return logs filtered
  */
 playoutLogController.getByFilter= function(req, res) { 
-    
-    var filters = {
-		media : req.body.media,
-        starttime: req.body.starttime,   
-        endtime: req.body.endtime,       
-	};
+    var filter = JSON.parse(req.params.filter);
 
-    playoutLogDao.getByFilter(filters, function(err, result) {
+    playoutLogDao.getByFilter(filter, function(err, result) {
         if(err) {
             console.log(err);
             return res.send(500, err.message);
