@@ -7,6 +7,8 @@ var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var userController = require('./controllers/user.controller');
 var playoutLogController = require('./controllers/playoutLog.controller');
+var supplierController = require('./controllers/supplier.controller');
+var rawMediaController = require('./controllers/rawMedia.controller');
 var config = require('./config'); // get our config file
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var routes = require('./routes');
@@ -46,7 +48,9 @@ app.get('/', function(req, res) {
 //----------------Controllers------------------------------------------
 var controllers = {
   user : userController,
-  playoutLog : playoutLogController, 
+  playoutLog : playoutLogController,
+  supplier : supplierController, 
+  rawMedia : rawMediaController, 
   others : {
 	  check : function(req, res) {
 		res.json(req.decoded);

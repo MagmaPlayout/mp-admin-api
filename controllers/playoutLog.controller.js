@@ -40,12 +40,12 @@ playoutLogController.getByFilter= function(req, res) {
 playoutLogController.insert = function(req, res) { 
     
 	var playoutLog = {
-		timestamp: req.body.timestamp,
+		//timestamp: req.body.timestamp,
 		idRawMedia: req.body.idRawMedia,
-        filter: req.body.filter,
-		sketch: req.body.sketch, 
-        starttime: req.body.starttime,   
-        endtime: req.body.endtime,       
+        //filter: req.body.filter,
+		//sketch: req.body.sketch, 
+        starttime: req.body.start,   
+        endtime: req.body.end,       
 	};
 
     playoutLogDao.insert(playoutLog, function(err, result) {

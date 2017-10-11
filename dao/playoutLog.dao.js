@@ -87,7 +87,7 @@ playoutLogDao.insert = function(playoutLogData, callback)
 
     db.query(
                 "INSERT INTO PlayoutLog (timestamp, idRawMedia, filter, sketch, starttime,endtime) "+
-                "VALUES (:timestamp, :idRawMedia, :filter, :sketch, :starttime, endtime) ",
+                "VALUES (:timestamp, :idRawMedia, :filter, :sketch, :starttime, :endtime) ",
               
                 {
                     timestamp: playoutLogData.timestamp,

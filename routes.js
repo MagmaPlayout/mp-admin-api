@@ -9,6 +9,11 @@ function setup(app, controllers) {
     app.get('/playoutLog', controllers.playoutLog.listAll);
     app.get('/playoutLogFilter/:filter', controllers.playoutLog.getByFilter);
     app.post('/playoutLog', controllers.playoutLog.insert);
+    app.post('/supplier', controllers.supplier.insert);
+    app.get('/supplier', controllers.supplier.listAll);
+    app.get('/supplier/name/:name', controllers.supplier.getByName);
+    app.post('/rawMedia', controllers.rawMedia.insert);
+    app.get('/rawMedia/location/:location', controllers.rawMedia.getByLocation);
 }
 
 exports.setup = setup;
