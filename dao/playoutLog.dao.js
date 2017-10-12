@@ -34,39 +34,8 @@ playoutLogDao.getByFilter = function(filter, callback) {
         "INNER JOIN Supplier s ON s.id = rm.idSupplier "+
         "WHERE pl.starttime >= :starttime AND pl.endtime <= :endtime ",
         filter,
-        function (err, logs) {
-            console.log(logs)
-            //get mediaIds           
-            var mediaIdList = [];
-            
-            _.uniq(logs, 'id').map(function (item) {
-                mediaIdList.push(item.idRawMedia);
-            });
-            if(logs.length > 0 ){
-                restCall.request(config.apis.mp_playout_api + 'medias/ids/', 'GET', mediaIdList, function (error, mediaList) {
-                
-                    //join logs with mediaList
-                    logs.forEach(log => 
-                        mediaList.forEach(function(media){
-                            if(log.idRawMedia == media.id)
-                                log.mediaName = media.name;
-                                log.mediaDuration = media.duration;
-                                log.mediaFrameRate = media.frameRate;
-                                log.mediaFrameCount = media.frameCount;
-                                log.mediaDescription = media.description;     
-                        })
-                    );
-                    if(filter.name != null || filter.name != '')
-                        logs = logs.filter(function (item) {
-                            return item.mediaName.toLowerCase().indexOf(filter.mediaName) !== -1 || !filter.mediaName;
-                        });
-
-                    callback(error, logs);              
-                }); 
-            }
-            else
-                callback(err, logs);     
-                     
+        function (err, logs) {           
+            callback(error, logs);                        
         }
     );
 
