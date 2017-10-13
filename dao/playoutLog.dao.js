@@ -35,7 +35,7 @@ playoutLogDao.getByFilter = function(filter, callback) {
         "WHERE pl.starttime >= :starttime AND pl.endtime <= :endtime ",
         filter,
         function (err, logs) {           
-            callback(error, logs);                        
+            callback(err, logs);                        
         }
     );
 
