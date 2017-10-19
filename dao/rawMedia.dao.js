@@ -12,7 +12,7 @@ rawMediaDao.listAll = function(callback) {
     db.query(
     	"SELECT * FROM rawMedia",
         function(err, rows) {
-            console.log(rows);
+            //console.log(rows);
             callback(err, rows);
 	    }
     );
@@ -26,10 +26,6 @@ rawMediaDao.listAll = function(callback) {
  */
 rawMediaDao.insert = function(rawMediaData, callback)
 {
-    console.log("Estoy en rawMedia DAO");
-    console.log("idSupplier:" +rawMediaData.idSupplier);
-    console.log("id:" +rawMediaData.id);
-    console.log("location:" +rawMediaData.location);
     db.query(
                 "INSERT INTO RawMedia (id, idSupplier, location) "+
                 "VALUES (:id, :idSupplier, :location) ",
@@ -64,12 +60,11 @@ rawMediaDao.getByLocation = function(location,callback)
     db.query("SELECT * FROM RawMedia WHERE location= ?",
             [location],
             function(err, rows) {
-                console.log(" rows[0]: "+rows[0]);
                 if(rows[0] != null){
-                    console.log(" rows is NOT null ");
+                    //console.log(" rows is NOT null ");
                     callback(err, rows[0]);    
                 }else{
-                    console.log(" rows is null ");
+                    //console.log(" rows is null ");
                     rows[0] = {};
                     callback(err, rows[0]);
                 }
