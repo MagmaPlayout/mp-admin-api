@@ -56,4 +56,15 @@ userController.authenticate= function(req, res) {
     });
 };
 
+/**
+ * GET - Return user actions
+ */
+userController.getUserActions = function(req, res) {  
+    userDao.getUserActions(req.params.idUser, function(err, usr) { 
+        if(err) 
+            return res.send(500, err.message);
+        res.status(200).jsonp(usr);
+    });	
+};
+
 module.exports = userController;

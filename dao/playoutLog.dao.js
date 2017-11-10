@@ -26,7 +26,6 @@ playoutLogDao.listAll = function(callback) {
  */
 playoutLogDao.getByFilter = function(filter, callback) {
    
-     console.log(filter.starttime);
      db.query(
     	"SELECT pl.*, rm.location,rm.idSupplier AS supplierId, s.name AS supplierName, s.phone AS supplierPhone, s.email AS supplierEmail "+
         "FROM PlayoutLog pl "+
