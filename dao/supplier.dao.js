@@ -12,7 +12,6 @@ supplierDao.listAll = function(callback) {
     db.query(
     	"SELECT * FROM Supplier",
         function(err, rows) {
-            console.log(rows);
             callback(err, rows);
 	    }
     );
@@ -60,12 +59,9 @@ supplierDao.getByName = function(name,callback)
     db.query("SELECT * FROM Supplier WHERE name= ?",
             [name],
             function(err, rows) {
-                console.log(" rows[0]: "+rows[0]);
                 if(rows[0] != null){
-                    console.log(" rows is NOT null ");
                     callback(err, rows[0]);    
                 }else{
-                    console.log(" rows is null ");
                     rows[0] = {};
                     callback(err, rows[0]);
                 }

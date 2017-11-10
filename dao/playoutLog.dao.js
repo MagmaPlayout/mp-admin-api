@@ -50,34 +50,35 @@ playoutLogDao.getByFilter = function(filter, callback) {
  * insert new playoutLog
  * @returns {playoutLog} last inserted
  */
-playoutLogDao.insert = function(playoutLogData, callback)
-{
-
+playoutLogDao.insert = function(playoutLogData, callback) {
     db.query(
-                "INSERT INTO PlayoutLog (idRawMedia, starttime, endtime) "+
-                "VALUES (:idRawMedia, :starttime, :endtime) ",
-              
-                {
-                    //timestamp: playoutLogData.timestamp,
-                    idRawMedia: playoutLogData.idRawMedia,
-                    //filter: playoutLogData.filter,
-                    //sketch: playoutLogData.sketch, 
-                    starttime: playoutLogData.starttime,   
-                    endtime: playoutLogData.endtime,
-                }              
-                , 
-                function(err,result) {  
-                    if(!err){
-                        playoutLogData.id = result.info.insertId
-                    }                                                 
-                    else{
-                        playoutLogData = null;
-                    }
-                    callback(err,playoutLogData);
-                }
+        " INSERT INTO PlayoutLog (idRawMedia, starttime, endtime, pieceName, " +
+        " resolution, duration, piecePath, frameCount, frameRate) "+
+        " VALUES (:idRawMedia, :starttime, :endtime, :pieceName, :resolution, "+
+        " :duration, :piecePath, :frameCount, :frameRate) ",
+        {
+            idRawMedia: playoutLogData.idRawMedia,
+            starttime: playoutLogData.starttime,   
+            endtime: playoutLogData.endtime,
+            duration: playoutLogData.duration,
+            pieceName: playoutLogData.pieceName,
+            piecePath: playoutLogData.piecePath,
+            frameRate: playoutLogData.frameRate,
+            resolution: playoutLogData.resolution,
+            frameCount: playoutLogData.frameCount
+        }, 
+        function(err,result) {  
+            if(!err){
+                playoutLogData.id = result.info.insertId;
+            }                                                 
+            else{
+                playoutLogData = null;
+            }
+            callback(err,playoutLogData);
+        }
    );
     
     db.end();
-}
+};
 
 module.exports = playoutLogDao;

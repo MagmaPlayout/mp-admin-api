@@ -25,7 +25,7 @@ supplierController.listAll = function(req, res) {
 supplierController.insert = function(req, res) { 
     
 	var supplier = {
-		name: req.body.provider,
+		name: req.body.supplier,
 		phone: req.body.phone,
         email: req.body.email       
 	};

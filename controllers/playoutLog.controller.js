@@ -38,23 +38,23 @@ playoutLogController.getByFilter= function(req, res) {
  * @returns {PlayoutLog} last inserted
  */
 playoutLogController.insert = function(req, res) { 
-    
-	var playoutLog = {
-		//timestamp: req.body.timestamp,
-		idRawMedia: req.body.idRawMedia,
-        //filter: req.body.filter,
-		//sketch: req.body.sketch, 
-        starttime: req.body.start,   
-        endtime: req.body.end,       
-	};
+    var playoutLog = {
+        idRawMedia: req.body.idRawMedia,
+        starttime: req.body.start,
+        endtime: req.body.end,
+        pieceName: req.body.pieceName,
+        resolution: req.body.resolution,
+        duration: req.body.duration,
+        piecePath: req.body.piecePath,
+        frameCount: req.body.frameCount,
+        frameRate: req.body.frameRate
+    };
 
     playoutLogDao.insert(playoutLog, function(err, result) {
-
         if(err) 
             return res.status(500).send(err.message);
      
         res.status(200).jsonp(result);
-
     });
 };
 
