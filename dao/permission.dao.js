@@ -10,7 +10,7 @@ permissionDao.getUserActions = function(idUser,callback)
 {	
     db.query("SELECT DISTINCT a.* " +  
                 "FROM UserActions ua " +
-                "INNER JOIN Action a " +
+                "INNER JOIN Action a ON a.id = ua.idAction " +
                 "WHERE ua.idUser = ?",
             [idUser],
             function(err, rows) {

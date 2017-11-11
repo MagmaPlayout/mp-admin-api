@@ -14,7 +14,7 @@ function setup(app, controllers) {
     app.get('/supplier/name/:name', controllers.supplier.getByName);
     app.post('/rawMedia', controllers.rawMedia.insert);
     app.get('/rawMedia/location/:location', controllers.rawMedia.getByLocation);
-    app.get('/permissions/userAction/:idUser', controllers.permission.getUserActions);
+    app.get('/permissions/userAction', controllers.permission.getUserActions);
 }
 
 exports.setup = setup;
