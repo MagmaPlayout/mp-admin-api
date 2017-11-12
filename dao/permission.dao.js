@@ -14,9 +14,33 @@ permissionDao.getUserActions = function(idUser,callback)
                 "WHERE ua.idUser = ?",
             [idUser],
             function(err, rows) {
-                if(err){
-                    console.log(err);
-                }
+                callback(err, rows);
+    });
+
+    db.end();
+
+}
+
+
+/**
+ * set User Actions by idRole
+ */
+permissionDao.setUserActionsByIdRole= function(idUser,idRole, callback)
+{	
+   
+    db.query("START TRANSACTION; "+ 
+                "DELETE FROM UserActions WHERE idUser = :idUser ;" +
+                "INSERT INTO UserActions " +
+                "SELECT :idUser, ra.idAction " +
+                "FROM RoleActions ra " +
+                "WHERE ra.idRole = :idRole; " +
+                "COMMIT;",
+            {
+                idUser : idUser,
+                idRole : idRole
+            }
+            ,
+            function(err, rows) {
                 callback(err, rows);
     });
 

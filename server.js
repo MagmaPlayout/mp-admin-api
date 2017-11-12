@@ -29,6 +29,9 @@ app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
+
+
+
 // Enable CORS
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -46,6 +49,8 @@ app.get('/', function(req, res) {
 	
 	
 });
+
+
 //----------------Controllers------------------------------------------
 var controllers = {
   user : userController,
@@ -119,10 +124,30 @@ apiRoutes.use(function(req, res, next) {
 routesAuth.setup(apiRoutes,controllers);
 app.use('/api', apiRoutes);
 
+
+//middleware for error handler 
+app.use(function(err, req, res, next) {
+    
+    // development error handler 
+    if (app.get('env') === 'development') {
+        res.status(500).send(err);
+    }
+    else{
+        // production error handler
+        // no stacktraces leaked to user
+        res.status(500).send(         {
+                message: err.message,
+                error: {}
+        });
+        console.log("production");
+    }
+    console.log(err);
+});
+
+
 // =================================================================
 // start the server ================================================
 // =================================================================
-
 app.listen(port);
 
 console.log("========================================================");

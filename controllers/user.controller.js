@@ -7,10 +7,11 @@ var userController = {};
 /**
  * GET - Return a user with specified ID
  */
-userController.findById = function(req, res) {  
+userController.findById = function(req, res, next) {  
     userDao.findById(req.params.id, function(err, usr) {
     
-        if(err) return res.send(500, err.message);
+         if(err) 
+            return next(err);
 
         console.log('GET /user/' + req.params.id);
         
@@ -23,10 +24,10 @@ userController.findById = function(req, res) {
 /**
  * POST - Authentication
  */
-userController.authenticate= function(req, res) {  
+userController.authenticate= function(req, res, next) {  
     userDao.findUser(req.body.username, req.body.password, function(err, user) {
 		
-        if (err) throw err;
+        if (err) return next(err);
 
 		if (!user) {
 			res.json({ success: false, message: 'Authentication failed. Username or password is incorrect.' });
@@ -57,12 +58,34 @@ userController.authenticate= function(req, res) {
 };
 
 /**
- * GET - Return user actions
+ * GET - Get all users
  */
-userController.getUserActions = function(req, res) {  
-    userDao.getUserActions(req.params.idUser, function(err, usr) { 
+userController.getAll = function(req, res, next) {  
+    userDao.getAll(function(err, usr) { 
         if(err) 
-            return res.send(500, err.message);
+            return next(err);
+        res.status(200).jsonp(usr);
+    });	
+};
+
+
+/**
+ * POST - insert an user
+ * @returns {UserModel} last inserted
+ */
+userController.insert = function(req, res, next) { 
+    var user = {
+        name: req.body.name,
+        surname : req.body.surname,
+        username : req.body.username,
+        password : req.body.password,// to-do => deberia venir encriptado con algoritmo bidireccional
+        email : req.body.email,
+        phone : req.body.phone
+    } 
+
+    userDao.insert(user, function(err, usr) { 
+        if(err) 
+            return next(err);
         res.status(200).jsonp(usr);
     });	
 };

@@ -14,7 +14,6 @@ userDao.findUser = function(usr,pass,callback)
             [usr,pass],
             function(err, rows) {
                 callback(err, rows[0]);
-                console.log(rows);
     });
 
     db.end();
@@ -31,9 +30,67 @@ userDao.findById = function(id,callback)
             [id],
             function(err, rows) {
                 callback(err, rows);
-                console.log(rows);
     });
 
+    db.end();
+}
+
+/**
+ * get all users
+ */
+userDao.getAll = function(callback)
+{
+
+    db.query("SELECT id, name, surname, username, email, phone FROM User",
+            function(err, rows) {
+                callback(err, rows);
+                
+    });
+
+    db.end();
+}
+
+
+/**
+ * insert new user
+ * @returns {user} last inserted
+ */
+userDao.insert = function(userData, callback)
+{  
+    db.query(
+                "INSERT INTO User (name, surname, username, password, email, phone) "+
+                "VALUES (:name, :surname, :username, :password, :email, :phone) ",
+                userData          
+                , 
+                function(err,result) {  
+                    if(!err){
+                        userData.id = result.info.insertId
+                    }                                                 
+                    else{
+                        userData = null;
+                    }
+                    callback(err, userData);
+                }
+    );
+    
+    db.end();
+}
+
+
+/**
+ * Update an user
+ */
+userDao.update= function(userData, callback)
+{
+	 db.query("UPDATE User SET name = :name,"+ 
+                    "username = :username, password = :password, phone = :phone, email = :email  " +
+                "WHERE id = :id",
+                userData, 
+                function(err, result) {
+                    callback(err, result);
+                }
+    );
+    
     db.end();
 }
 

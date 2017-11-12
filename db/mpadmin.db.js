@@ -8,6 +8,7 @@ var Client = new Client({
   host: config.db.host,
   user: config.db.user,
   password: config.db.password,
+  multiStatements: true,
   db: config.db.name
 });
 
