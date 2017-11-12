@@ -44,4 +44,20 @@ permissionController.setUserActionsByIdRole = function(req, res, next) {
 };
 
 
+/**
+ * GET - Get all Roles
+ */
+permissionController.getAllRoles = function(req, res, next) { 
+
+    permissionDao.getAllRoles(function(err, usr) { 
+        if(err) 
+            return next(err);
+
+        res.status(200).jsonp(usr);
+    });	
+   
+};
+
+
+
 module.exports = permissionController;

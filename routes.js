@@ -23,6 +23,7 @@ function setup(app, controllers) {
     //permissions api
     app.get('/permissions/userAction', controllers.permission.getUserActions);
     app.post('/permissions/userAction', controllers.permission.setUserActionsByIdRole);
+    app.get('/permissions/roles', controllers.permission.getAllRoles);
 }
 
 exports.setup = setup;

@@ -48,4 +48,18 @@ permissionDao.setUserActionsByIdRole= function(idUser,idRole, callback)
 
 }
 
+/**
+ * get all Roles
+ */
+permissionDao.getAllRoles = function(callback)
+{	
+    db.query("SELECT * FROM Role",
+            function(err, rows) {
+                callback(err, rows);
+    });
+
+    db.end();
+
+}
+
 module.exports = permissionDao;
