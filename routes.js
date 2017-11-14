@@ -9,6 +9,7 @@ function setup(app, controllers) {
     app.post('/authenticate', controllers.user.authenticate);
     app.get('/users', controllers.user.getAll);
     app.post('/users', controllers.user.insert);
+    app.delete('/users', controllers.user.delete);
     //playoutlogs api
     app.get('/playoutLog', controllers.playoutLog.listAll);
     app.get('/playoutLogFilter/:filter', controllers.playoutLog.getByFilter);
@@ -22,7 +23,7 @@ function setup(app, controllers) {
     app.get('/rawMedia/location/:location', controllers.rawMedia.getByLocation);
     //permissions api
     app.get('/permissions/userAction', controllers.permission.getUserActions);
-    app.post('/permissions/userAction', controllers.permission.setUserActionsByIdRole);
+    app.put('/permissions/userRole', controllers.permission.setUserRole);
     app.get('/permissions/roles', controllers.permission.getAllRoles);
 }
 

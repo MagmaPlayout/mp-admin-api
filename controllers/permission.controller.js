@@ -27,9 +27,9 @@ permissionController.getUserActions = function(req, res, next) {
 };
 
 /**
- * POST - Set User Actions by idRole
+ * POST - Set User Role
  */
-permissionController.setUserActionsByIdRole = function(req, res, next) { 
+permissionController.setUserRole = function(req, res, next) { 
 
     var idRole = req.body.idRole;
     var idUser = req.body.idUser;
@@ -57,7 +57,5 @@ permissionController.getAllRoles = function(req, res, next) {
     });	
    
 };
-
-
 
 module.exports = permissionController;

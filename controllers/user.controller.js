@@ -90,4 +90,18 @@ userController.insert = function(req, res, next) {
     });	
 };
 
+
+/**
+ * DEL - Delete an user
+ * @returns {boolean} 
+ */
+userController.delete = function(req, res, next) { 
+    
+    userDao.delete(re.param.id, function(err, usr) { 
+        if(err) 
+            return next(err);
+        res.status(200).jsonp(true);
+    });	
+};
+
 module.exports = userController;

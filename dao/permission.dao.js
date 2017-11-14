@@ -8,11 +8,19 @@ var permissionDao = {}
  */
 permissionDao.getUserActions = function(idUser,callback)
 {	
-    db.query("SELECT DISTINCT a.* " +  
+    db.query("SELECT a.* " +  
                 "FROM UserActions ua " +
                 "INNER JOIN Action a ON a.id = ua.idAction " +
-                "WHERE ua.idUser = ?",
-            [idUser],
+                "WHERE ua.idUser = :idUser " + 
+                "UNION " + 
+                "SELECT a.* " +
+                "FROM User u " +
+                "INNER JOIN RoleActions ra ON ra.idRole = u.idRole " + 
+                "INNER JOIN Action a ON a.id = ra.idAction " + 
+                "WHERE u.id = :idUser ",
+            {
+                idUser : idUser
+            },
             function(err, rows) {
                 callback(err, rows);
     });
@@ -25,16 +33,10 @@ permissionDao.getUserActions = function(idUser,callback)
 /**
  * set User Actions by idRole
  */
-permissionDao.setUserActionsByIdRole= function(idUser,idRole, callback)
+permissionDao.setUserRole = function(idUser,idRole, callback)
 {	
    
-    db.query("START TRANSACTION; "+ 
-                "DELETE FROM UserActions WHERE idUser = :idUser ;" +
-                "INSERT INTO UserActions " +
-                "SELECT :idUser, ra.idAction " +
-                "FROM RoleActions ra " +
-                "WHERE ra.idRole = :idRole; " +
-                "COMMIT;",
+    db.query("UPDATE User SET idRol = : idRol WHERE id = : idUser",
             {
                 idUser : idUser,
                 idRole : idRole

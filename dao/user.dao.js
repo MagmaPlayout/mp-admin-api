@@ -41,7 +41,7 @@ userDao.findById = function(id,callback)
 userDao.getAll = function(callback)
 {
 
-    db.query("SELECT id, name, surname, username, email, phone FROM User",
+    db.query("SELECT id, name, surname, username, email, phone, idRole FROM User",
             function(err, rows) {
                 callback(err, rows);
                 
@@ -86,6 +86,28 @@ userDao.update= function(userData, callback)
                     "username = :username, password = :password, phone = :phone, email = :email  " +
                 "WHERE id = :id",
                 userData, 
+                function(err, result) {
+                    callback(err, result);
+                }
+    );
+    
+    db.end();
+}
+
+
+
+/**
+ * Delete an user
+ */
+userDao.delete= function(idUser, callback)
+{
+	 db.query("START TRANSACTION;" +
+                "DELETE FROM UserActions WHERE idUser = :idUser; " +
+                "DELETE FROM User WHERE id = :idUser;" +
+                "COMMIT;" ,
+                {
+                    idUser
+                }, 
                 function(err, result) {
                     callback(err, result);
                 }
