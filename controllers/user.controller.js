@@ -80,7 +80,8 @@ userController.insert = function(req, res, next) {
         username : req.body.username,
         password : req.body.password,// to-do => deberia venir encriptado con algoritmo bidireccional
         email : req.body.email,
-        phone : req.body.phone
+        phone : req.body.phone,
+        idRole : req.body.idRole
     } 
 
     userDao.insert(user, function(err, usr) { 
@@ -96,8 +97,7 @@ userController.insert = function(req, res, next) {
  * @returns {boolean} 
  */
 userController.delete = function(req, res, next) { 
-    
-    userDao.delete(re.param.id, function(err, usr) { 
+    userDao.delete(req.params.id, function(err, usr) { 
         if(err) 
             return next(err);
         res.status(200).jsonp(true);

@@ -58,8 +58,8 @@ userDao.getAll = function(callback)
 userDao.insert = function(userData, callback)
 {  
     db.query(
-                "INSERT INTO User (name, surname, username, password, email, phone) "+
-                "VALUES (:name, :surname, :username, :password, :email, :phone) ",
+                "INSERT INTO User (name, surname, username, password, email, phone, idRole) "+
+                "VALUES (:name, :surname, :username, :password, :email, :phone, :idRole) ",
                 userData          
                 , 
                 function(err,result) {  
@@ -101,6 +101,7 @@ userDao.update= function(userData, callback)
  */
 userDao.delete= function(idUser, callback)
 {
+   
 	 db.query("START TRANSACTION;" +
                 "DELETE FROM UserActions WHERE idUser = :idUser; " +
                 "DELETE FROM User WHERE id = :idUser;" +
@@ -109,6 +110,8 @@ userDao.delete= function(idUser, callback)
                     idUser
                 }, 
                 function(err, result) {
+                    console.log(err);
+                    console.log(result)
                     callback(err, result);
                 }
     );

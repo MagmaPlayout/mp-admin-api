@@ -34,7 +34,7 @@ permissionController.setUserRole = function(req, res, next) {
     var idRole = req.body.idRole;
     var idUser = req.body.idUser;
   
-    permissionDao.setUserActionsByIdRole(idUser, idRole, function(err, usr) { 
+    permissionDao.setUserRole(idUser, idRole, function(err, usr) { 
         if(err) 
             return next(err);
 

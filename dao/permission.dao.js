@@ -36,7 +36,7 @@ permissionDao.getUserActions = function(idUser,callback)
 permissionDao.setUserRole = function(idUser,idRole, callback)
 {	
    
-    db.query("UPDATE User SET idRol = : idRol WHERE id = : idUser",
+    db.query("UPDATE User SET idRole = :idRole WHERE id = :idUser",
             {
                 idUser : idUser,
                 idRole : idRole

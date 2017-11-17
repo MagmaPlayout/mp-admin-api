@@ -36,6 +36,7 @@ app.use(morgan('dev'));
 app.all('/*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
 
@@ -72,16 +73,12 @@ var controllers = {
    * */
 };
 
-// ---------------------------------------------------------
-// get an instance of the router for api routes
-// ---------------------------------------------------------
+
 var apiRoutes = express.Router(); 
 
 // ---------------------------------------------------------
 // authentication (no middleware necessary since this isnt authenticated)
 // ---------------------------------------------------------
-// http://localhost:8080/api/authenticate
-//apiRoutes.post('/authenticate', userController.authenticate);
 routes.setup(apiRoutes,controllers);
 
 // ---------------------------------------------------------
@@ -89,9 +86,10 @@ routes.setup(apiRoutes,controllers);
 // ---------------------------------------------------------
 apiRoutes.use(function(req, res, next) {
 
+    console.log("Token required");
+    console.log(req);
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	
 	// decode token
 	if (token) {
 
